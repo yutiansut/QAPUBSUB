@@ -14,11 +14,13 @@ import sys
 
 loop = asyncio.get_event_loop()
 
-async def handler(addr,fs,fr):
+
+async def handler(addr, fs, fr):
     async with websockets.connect(addr) as websocket:
         loop.create_task(send(websocket, fs))
         while True:
             fr.write(await websocket.recv())
+
 
 async def send(websocket, fs):
     while True:
