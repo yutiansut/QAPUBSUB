@@ -36,9 +36,6 @@ class publisher(base_ps):
         self.connection.close()
 
 
-
-
-
 if __name__ == '__main__':
     import datetime
     p = publisher(exchange='z')
