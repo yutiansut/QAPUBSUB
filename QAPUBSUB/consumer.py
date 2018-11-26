@@ -30,7 +30,7 @@ class subscriber(base_ps):
         print(1)
         print(" [x] %r" % body)
 
-    def subscrib(self):
+    def subscribe(self):
         self.channel.basic_consume(self.queue, self.callback, auto_ack=True)
         self.channel.start_consuming()
         # self.channel.basic_consume(
@@ -38,8 +38,7 @@ class subscriber(base_ps):
 
     def start(self):
         try:
-            self.subscrib()
-            self.channel.start_consuming()
+            self.subscribe()
         except Exception as e:
             print(e)
             self.start()
