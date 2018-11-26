@@ -1,27 +1,51 @@
 
 import pika
 from QAPUBSUB.base import base_ps
+import random
 
 
-class consumer(base_ps):
-    def __init__(self, host='localhost', port=5672, user='guest', password='guest', exchange=''):
+class subscriber(base_ps):
+    """new version (pika 1.0+) client for sub/quantaxis IO BUS
+
+    Arguments:
+        base_ps {[type]} -- [description]
+    """
+
+    def __init__(self, host='localhost', port=5672, user='guest', password='guest', exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000))):
         super().__init__(host=host, port=port, user=user,
                          password=password, exchange=exchange)
-        self.result = self.channel.queue_declare(exclusive=True)
-        self.queue_name = self.result.method.queue            # 队列名采用服务端分配的临时队列
-        self.channel.queue_bind(exchange=exchange, queue=self.queue_name)
+        self.queue = queue
+        self.channel.exchange_declare(exchange=exchange,
+                                      exchange_type='fanout',
+                                      passive=False,
+                                      durable=False,
+                                      auto_delete=False)
+        self.queue = self.channel.queue_declare(
+            queue='', auto_delete=True, exclusive=True).method.queue
+        self.channel.queue_bind(queue=self.queue, exchange=exchange,
+                                routing_key='qa_routing')          # 队列名采用服务端分配的临时队列
+        # self.channel.basic_qos(prefetch_count=1)
 
-    def callback(self, method, properties, body, *args, **kwargs):
+    def callback(self, chan, method_frame, _header_frame, body, userdata=None):
+        print(1)
         print(" [x] %r" % body)
 
-    def consum(self):
-
-        self.channel.basic_consume(
-            self.callback, queue=self.queue_name, no_ack=True)  # 消息接收
+    def subscrib(self):
+        self.channel.basic_consume(self.queue, self.callback, auto_ack=True)
         self.channel.start_consuming()
+        # self.channel.basic_consume(
+        #     self.callback, queue=self.queue_name, no_ack=True)  # 消息接收
+
+    def start(self):
+        try:
+            self.subscrib()
+            self.channel.start_consuming()
+        except Exception as e:
+            print(e)
+            self.start()
 
 
 if __name__ == '__main__':
-    c = consumer(exchange='z')
-    while True:
-        c.consum()
+    c = subscriber(exchange='z3')
+
+    c.start()
