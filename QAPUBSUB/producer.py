@@ -9,7 +9,8 @@ class publisher(base_ps):
     def __init__(self, host='localhost', port=5672, user='guest', password='guest', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='fanout'):
         super().__init__(host, port, user, password, channel_number,
                          queue_name, routing_key,  exchange, exchange_type)
-        self.channel.queue_declare(self.queue_name)
+        self.channel.queue_declare(
+            self.queue_name, auto_delete=True, exclusive=True)
         self.channel.exchange_declare(exchange=exchange,
                                       exchange_type='fanout',
                                       passive=False,
