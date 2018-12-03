@@ -1,0 +1,26 @@
+{
+  "name": "qapubsub",
+  "version": "1.0.0",
+  "description": "quantaxis pub.sub javascript model",
+  "main": "index.js",
+  "dependencies": {
+    "amqplib": "^0.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yutiansut/QAPUBSUB.git"
+  },
+  "keywords": [
+    "quantaxis;pubsub"
+  ],
+  "author": "yutiansut",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yutiansut/QAPUBSUB/issues"
+  },
+  "homepage": "https://github.com/yutiansut/QAPUBSUB#readme"
+}
