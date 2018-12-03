@@ -16,11 +16,13 @@ class base_ps():
         self.routing_key = routing_key
         self.exchange_type = exchange_type
         self.channel_number = channel_number
-
+        # fixed: login with other user, pass failure @zhongjy
+        credentials=pika.PlainCredentials(self.user, self.password, erase_on_connect=True)
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=self.host, port=self.port,
-                                      heartbeat_interval=0,
-                                      socket_timeout=5,))
+                pika.ConnectionParameters(host=self.host, port=self.port,
+                    credentials=credentials, heartbeat_interval=0, socket_timeout=5,
+                )
+            )
 
         self.channel = self.connection.channel(
             channel_number=self.channel_number)
