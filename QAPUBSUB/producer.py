@@ -6,7 +6,7 @@ from QAPUBSUB.base import base_ps
 
 
 class publisher(base_ps):
-    def __init__(self, host='localhost', port=5672, user='guest', password='guest', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='fanout'):
+    def __init__(self, host='localhost', port=5672, user='admin', password='admin', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='fanout'):
         super().__init__(host, port, user, password, channel_number,
                          queue_name, routing_key,  exchange, exchange_type)
         self.channel.queue_declare(
@@ -48,7 +48,7 @@ class publisher(base_ps):
 
 
 class publisher_routing(base_ps):
-    def __init__(self, host='localhost', port=5672, user='guest', password='guest', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='direct'):
+    def __init__(self, host='localhost', port=5672, user='admin', password='admin', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='direct'):
         super().__init__(host, port, user, password, channel_number,
                          queue_name, routing_key,  exchange, exchange_type)
         self.routing_key = routing_key
