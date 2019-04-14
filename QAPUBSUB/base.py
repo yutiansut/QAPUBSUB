@@ -20,7 +20,7 @@ class base_ps():
         credentials=pika.PlainCredentials(self.user, self.password, erase_on_connect=True)
         self.connection = pika.BlockingConnection(
                 pika.ConnectionParameters(host=self.host, port=self.port,
-                    credentials=credentials, heartbeat_interval=0, socket_timeout=5,
+                    credentials=credentials, heartbeat=0, socket_timeout=5,
                 )
             )
 
