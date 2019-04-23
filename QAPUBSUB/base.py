@@ -35,7 +35,7 @@ class base_ps():
 
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=self.host, port=self.port,
-                                      heartbeat_interval=0,
+                                      heartbeat=0,
                                       socket_timeout=5,))
 
         self.channel = self.connection.channel(
