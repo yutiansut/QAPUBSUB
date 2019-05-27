@@ -41,7 +41,7 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
     ],
-    install_requires=['pika>=1.0.0', 'quantaxis>=1.1.10.dev2'],
+    install_requires=['pika>=1.0.0', 'quantaxis>=1.4.8'],
     keywords=KEYWORDS,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
