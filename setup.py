@@ -32,7 +32,7 @@ LICENSE = "MIT"
 
 setup(
     name=NAME,
-    version='1.4',
+    version='1.5',
     description=DESCRIPTION,
     long_description='publisher and subscriber',
     classifiers=[
@@ -41,7 +41,7 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
     ],
-    install_requires=['pika>=1.0.0', 'quantaxis>=1.4.8'],
+    install_requires=['pika==1.0.0b1', 'quantaxis>=1.4.8'],
     keywords=KEYWORDS,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,

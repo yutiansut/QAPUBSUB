@@ -1,12 +1,16 @@
 #!/usr/bin/env python 3
 import pika
+
 import QUANTAXIS as QA
 from QAPUBSUB.base import base_ps
+from QAPUBSUB.setting import (qapubsub_ip, qapubsub_password, qapubsub_port,
+                              qapubsub_user)
+
 #########  生产者 #########
 
 
 class publisher(base_ps):
-    def __init__(self, host='localhost', port=5672, user='admin', password='admin', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='fanout'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='fanout'):
         super().__init__(host, port, user, password, channel_number,
                          queue_name, routing_key,  exchange, exchange_type)
         self.channel.queue_declare(
@@ -48,7 +52,7 @@ class publisher(base_ps):
 
 
 class publisher_routing(base_ps):
-    def __init__(self, host='localhost', port=5672, user='admin', password='admin', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='direct'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='direct'):
         super().__init__(host, port, user, password, channel_number,
                          queue_name, routing_key,  exchange, exchange_type)
         self.routing_key = routing_key
@@ -90,7 +94,7 @@ class publisher_routing(base_ps):
 
 
 class publisher_topic(base_ps):
-    def __init__(self, host='localhost', port=5672, user='admin', password='admin', channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='topic'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='topic'):
         super().__init__(host, port, user, password, channel_number,
                          queue_name, routing_key,  exchange, exchange_type)
         self.routing_key = routing_key

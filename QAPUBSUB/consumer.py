@@ -1,6 +1,7 @@
 
 import pika
 from QAPUBSUB.base import base_ps
+from QAPUBSUB.setting import qapubsub_ip, qapubsub_port, qapubsub_user, qapubsub_password
 import random
 
 
@@ -11,7 +12,7 @@ class subscriber(base_ps):
         base_ps {[type]} -- [description]
     """
 
-    def __init__(self, host='localhost', port=5672, user='guest', password='guest', exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key ='default'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default'):
         super().__init__(host=host, port=port, user=user,
                          password=password, exchange=exchange)
         self.queue = queue
@@ -52,7 +53,7 @@ class subscriber_routing(base_ps):
         base_ps {[type]} -- [description]
     """
 
-    def __init__(self, host='localhost', port=5672, user='guest', password='guest', exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key ='default'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default'):
         super().__init__(host=host, port=port, user=user,
                          password=password, exchange=exchange)
         self.queue = queue
@@ -93,7 +94,7 @@ class subscriber_topic(base_ps):
         base_ps {[type]} -- [description]
     """
 
-    def __init__(self, host='localhost', port=5672, user='guest', password='guest', exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default'):
         super().__init__(host=host, port=port, user=user,
                          password=password, exchange=exchange)
         self.queue = queue
