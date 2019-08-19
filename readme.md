@@ -7,7 +7,7 @@
 - 1.2/1.3 重构
 - 1.4 增加direct模型的支持, 增加routing的订阅/分发  
 - 1.5 优化pubsub的模式, 规范env, 支持多机分布式/多docker container
-
+- 1.6 增加debug tool[command line]
 
 ## 安装
 
@@ -21,3 +21,11 @@ pip install quantaxis_pubsub
 - QAPUBSUB_PORT 默认 5672
 - QAPUBSUB_USER 默认 'guest'
 - QAPUBSUB_PWD  默认 'guest'
+
+## DEBUG tool
+
+```bash
+qaps_pub --exchange {exchange} --model {direct/fanout} --routing_key {key} --content {content} --user {user} --password {password} --host {host}
+
+qaps_sub --exchange {exchange} --model {direct/fanout} --routing_key {key} --user {user} --password {password} --host {host}
+```
