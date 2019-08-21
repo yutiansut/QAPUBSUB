@@ -1,7 +1,7 @@
 #!/usr/bin/env python 3
 import pika
 
-import QUANTAXIS as QA
+
 from QAPUBSUB.base import base_ps
 from QAPUBSUB.setting import (qapubsub_ip, qapubsub_password, qapubsub_port,
                               qapubsub_user)
