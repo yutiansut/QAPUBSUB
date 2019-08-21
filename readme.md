@@ -19,8 +19,8 @@ pip install quantaxis_pubsub
 
 - QAPUBSUB_IP 默认 'localhost'
 - QAPUBSUB_PORT 默认 5672
-- QAPUBSUB_USER 默认 'guest'
-- QAPUBSUB_PWD  默认 'guest'
+- QAPUBSUB_USER 默认 'admin'
+- QAPUBSUB_PWD  默认 'admin'
 
 ## DEBUG tool
 
