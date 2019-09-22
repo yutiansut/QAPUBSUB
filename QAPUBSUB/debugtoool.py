@@ -32,5 +32,6 @@ def debug_pub(exchange, model, routing_key, user, password, host, content):
         publisher(host=host, user=user, password=password,
                   exchange=exchange).pub(content)
     elif model == 'direct':
+        print(routing_key)
         publisher_routing(host=host, user=user, password=password,
-                          exchange=exchange, routing_key=routing_key).pub(content)
+                          exchange=exchange, routing_key=routing_key).pub(content, routing_key=routing_key)
