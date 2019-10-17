@@ -10,13 +10,14 @@ from QAPUBSUB.producer import publisher, publisher_routing
 @click.option('--user', default='admin')
 @click.option('--password', default='admin')
 @click.option('--host', default='127.0.0.1')
-def debug_sub(exchange, model, routing_key, user, password, host):
+@click.option('--durable', default=False)
+def debug_sub(exchange, model, routing_key, user, password, host, durable):
     if model == 'fanout':
         subscriber(host=host, user=user, password=password,
                    exchange=exchange).start()
     elif model == 'direct':
         subscriber_routing(host=host, user=user, password=password,
-                           exchange=exchange, routing_key=routing_key).start()
+                           exchange=exchange, routing_key=routing_key, durable=durable).start()
 
 
 @click.command()
