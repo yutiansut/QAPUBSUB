@@ -12,8 +12,8 @@ class subscriber(base_ps):
         base_ps {[type]} -- [description]
     """
 
-    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default'):
-        super().__init__(host=host, port=port, user=user,
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, exchange='', vhost='/',queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default'):
+        super().__init__(host=host, port=port, user=user, vhost=vhost,
                          password=password, exchange=exchange)
         self.queue = queue
         self.channel.exchange_declare(exchange=exchange,
@@ -53,8 +53,8 @@ class subscriber_routing(base_ps):
         base_ps {[type]} -- [description]
     """
 
-    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default',durable=False):
-        super().__init__(host=host, port=port, user=user,
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, exchange='', queue='qa_sub.{}'.format(random.randint(0, 1000000)), routing_key='default',durable=False,vhost='/'):
+        super().__init__(host=host, port=port, user=user, vhost=vhost,
                          password=password, exchange=exchange)
         self.queue = queue
         self.channel.exchange_declare(exchange=exchange,
