@@ -1,6 +1,6 @@
 import click
-from QAPUBSUB.consumer import subscriber, subscriber_routing
-from QAPUBSUB.producer import publisher, publisher_routing
+from QAPUBSUB.consumer import subscriber, subscriber_routing, subscriber_topic
+from QAPUBSUB.producer import publisher, publisher_routing, publisher_topic
 
 
 @click.command()
@@ -18,6 +18,9 @@ def debug_sub(exchange, model, routing_key, user, password, host, durable):
     elif model == 'direct':
         subscriber_routing(host=host, user=user, password=password,
                            exchange=exchange, routing_key=routing_key, durable=durable).start()
+    elif model == 'topic':
+        subscriber_topic(host=host, user=user, password=password,
+                         exchange=exchange, routing_key=routing_key, durable=durable).start()
 
 
 @click.command()
@@ -36,3 +39,6 @@ def debug_pub(exchange, model, routing_key, user, password, host, content):
         print(routing_key)
         publisher_routing(host=host, user=user, password=password,
                           exchange=exchange, routing_key=routing_key).pub(content, routing_key=routing_key)
+    elif model == 'topic':
+        publisher_topic(host=host, user=user, password=password,
+                        exchange=exchange, routing_key=routing_key).pub(content, routing_key=routing_key)

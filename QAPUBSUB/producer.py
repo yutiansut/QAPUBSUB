@@ -52,9 +52,9 @@ class publisher(base_ps):
 
 
 class publisher_routing(base_ps):
-    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='direct',vhost='/'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='direct', vhost='/'):
         super().__init__(host, port, user, password, channel_number,
-                         queue_name, routing_key,  exchange, exchange_type,vhost)
+                         queue_name, routing_key,  exchange, exchange_type, vhost)
         self.routing_key = routing_key
         self.channel.queue_declare(
             self.queue_name, auto_delete=True, exclusive=True)
@@ -94,9 +94,9 @@ class publisher_routing(base_ps):
 
 
 class publisher_topic(base_ps):
-    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='topic',vhost='/'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='topic', vhost='/'):
         super().__init__(host, port, user, password, channel_number,
-                         queue_name, routing_key,  exchange, exchange_type,vhost)
+                         queue_name, routing_key,  exchange, exchange_type, vhost)
         self.routing_key = routing_key
         self.channel.queue_declare(
             self.queue_name, auto_delete=True, exclusive=True)

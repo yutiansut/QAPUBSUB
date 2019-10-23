@@ -6,7 +6,7 @@ from QAPUBSUB.setting import qapubsub_ip, qapubsub_port, qapubsub_user, qapubsub
 
 class base_ps():
 
-    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='fanout',vhost='/'):
+    def __init__(self, host=qapubsub_ip, port=qapubsub_port, user=qapubsub_user, password=qapubsub_password, channel_number=1, queue_name='', routing_key='default',  exchange='', exchange_type='fanout', vhost='/'):
         self.host = host
         self.port = port
         self.user = user
@@ -22,7 +22,7 @@ class base_ps():
         credentials = pika.PlainCredentials(
             self.user, self.password, erase_on_connect=True)
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=self.host, port=self.port,virtual_host=self.vhost,
+            pika.ConnectionParameters(host=self.host, port=self.port, virtual_host=self.vhost,
                                       credentials=credentials, heartbeat=0, socket_timeout=5,
                                       )
         )
@@ -38,7 +38,7 @@ class base_ps():
 
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=self.host, port=self.port,
-                                      heartbeat=0,virtual_host=self.vhost,
+                                      heartbeat=0, virtual_host=self.vhost,
                                       socket_timeout=5,))
 
         self.channel = self.connection.channel(
