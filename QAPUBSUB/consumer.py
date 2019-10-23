@@ -68,12 +68,23 @@ class subscriber_routing(base_ps):
         self.channel.queue_bind(queue=self.queue, exchange=exchange,
                                 routing_key=self.routing_key)          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
+        self.c = []
+    def add_sub(self, exchange, routing_key):
+        # 非常不优雅的多订阅实现
+        u = subscriber_routing(exchange=exchange, routing_key=routing_key)
+        u.callback = self.callback
 
+        import threading
+        self.c.append(threading.Thread(
+            target=u.start, daemon=True, group=None))
     def callback(self, chan, method_frame, _header_frame, body, userdata=None):
         print(1)
         print(" [x] %r" % body)
 
     def subscribe(self):
+        if len(self.c) > 0:
+            [item.start() for item in self.c]
+
         self.channel.basic_consume(self.queue, self.callback, auto_ack=True)
         self.channel.start_consuming()
 
@@ -109,18 +120,31 @@ class subscriber_topic(base_ps):
         self.channel.queue_bind(queue=self.queue, exchange=exchange,
                                 routing_key=self.routing_key)          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
+        self.c = []
+
+    def add_sub(self, exchange, routing_key):
+        # 非常不优雅的多订阅实现
+        u = subscriber_topic(exchange=exchange, routing_key=routing_key)
+        u.callback = self.callback
+
+        import threading
+        self.c.append(threading.Thread(
+            target=u.start, daemon=True, group=None))
 
     def callback(self, chan, method_frame, _header_frame, body, userdata=None):
         print(1)
         print(" [x] %r" % body)
 
     def subscribe(self):
+        if len(self.c) > 0:
+            [item.start() for item in self.c]
         self.channel.basic_consume(self.queue, self.callback, auto_ack=True)
         self.channel.start_consuming()
 
     def start(self):
         try:
             self.subscribe()
+
         except Exception as e:
             print(e)
             self.start()

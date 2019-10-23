@@ -12,6 +12,7 @@ from QAPUBSUB.producer import publisher_routing
 z1= subscriber_routing(exchange='xx',routing_key='x1')
 z2 = subscriber_routing(exchange='xx',routing_key='x2')
 z3 = subscriber_routing(exchange='xx',routing_key='x2')
+
 z1.callback= lambda a,b,c,x: print('FROM X1 {}'.format(x))
 z2.callback= lambda a,b,c,x: print('FROM X2 {}'.format(x))
 z3.callback= lambda a,b,c,x: print('FROM X3 {}'.format(x))

@@ -9,6 +9,8 @@
 - 1.5 优化pubsub的模式, 规范env, 支持多机分布式/多docker container
 - 1.6 增加debug tool[command line]
 - 1.6.2 修改默认user为 'admin'
+- 1.6.5 增加durable配置和vhost
+- 1.7  优化topic 模式
 
 ## 安装
 
