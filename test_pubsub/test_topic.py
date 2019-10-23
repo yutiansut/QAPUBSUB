@@ -7,26 +7,24 @@ from QAPUBSUB.consumer import subscriber_topic
 from QAPUBSUB.producer import publisher_topic
 
 
-#z1 = subscriber_topic(exchange='testTopic', routing_key='******SZ')
+z1 = subscriber_topic(exchange='testTopic', routing_key='#')
 z2 = subscriber_topic(exchange='testTopic', routing_key='#.SZ')
-# z3 = subscriber_topic(exchange='testTopic',routing_key='#.SH')
+z3 = subscriber_topic(exchange='testTopic', routing_key='#.SH')
 
 
-
-#z1.callback=lambda a, b, c, x: print('FROM X1 {}'.format(x))
+z1.callback = lambda a, b, c, x: print('FROM X1 {}'.format(x))
 z2.callback = lambda a, b, c, x: print('FROM X2 {}'.format(x))
 
 z2.add_sub(exchange='testTopic', routing_key='000001.SZ')
 
-# z3.callback= lambda a,b,c,x: print('FROM X3 {}'.format(x))
-p=publisher_topic(exchange='testTopic', )
+z3.callback = lambda a, b, c, x: print('FROM X3 {}'.format(x))
+p = publisher_topic(exchange='testTopic', )
 
 
-#threading.Thread(target=z1.start).start()
+threading.Thread(target=z1.start).start()
 
 threading.Thread(target=z2.start).start()
-# threading.Thread(target=z3.start).start()
-
+threading.Thread(target=z3.start).start()
 
 
 p.pub('000001', routing_key='000001.SZ')
