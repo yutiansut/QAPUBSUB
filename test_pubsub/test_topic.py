@@ -15,7 +15,7 @@ z3 = subscriber_topic(exchange='testTopic', routing_key='#.SH')
 z1.callback = lambda a, b, c, x: print('FROM X1 {}'.format(x))
 z2.callback = lambda a, b, c, x: print('FROM X2 {}'.format(x))
 
-z2.add_sub(exchange='testTopic', routing_key='000001.SZ')
+z2.add_sub(exchange='testTopic', routing_key='#.SH')
 
 z3.callback = lambda a, b, c, x: print('FROM X3 {}'.format(x))
 p = publisher_topic(exchange='testTopic', )

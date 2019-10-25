@@ -28,6 +28,11 @@ class subscriber(base_ps):
                                 routing_key='qa_routing')          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
 
+    def add_sub(self, exchange, routing_key):
+
+        self.channel.queue_bind(queue=self.queue, exchange=exchange,
+                                routing_key=routing_key)
+
     def callback(self, chan, method_frame, _header_frame, body, userdata=None):
         print(1)
         print(" [x] %r" % body)
@@ -69,14 +74,12 @@ class subscriber_routing(base_ps):
                                 routing_key=self.routing_key)          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
         self.c = []
-    def add_sub(self, exchange, routing_key):
-        # 非常不优雅的多订阅实现
-        u = subscriber_routing(exchange=exchange, routing_key=routing_key)
-        u.callback = self.callback
 
-        import threading
-        self.c.append(threading.Thread(
-            target=u.start, daemon=True, group=None))
+    def add_sub(self, exchange, routing_key):
+
+        self.channel.queue_bind(queue=self.queue, exchange=exchange,
+                                routing_key=routing_key)          # 队列名采用服务端
+
     def callback(self, chan, method_frame, _header_frame, body, userdata=None):
         print(1)
         print(" [x] %r" % body)
@@ -124,12 +127,8 @@ class subscriber_topic(base_ps):
 
     def add_sub(self, exchange, routing_key):
         # 非常不优雅的多订阅实现
-        u = subscriber_topic(exchange=exchange, routing_key=routing_key)
-        u.callback = self.callback
-
-        import threading
-        self.c.append(threading.Thread(
-            target=u.start, daemon=True, group=None))
+        self.channel.queue_bind(queue=self.queue, exchange=exchange,
+                                routing_key=routing_key)          # 队列名采用服务端
 
     def callback(self, chan, method_frame, _header_frame, body, userdata=None):
         print(1)

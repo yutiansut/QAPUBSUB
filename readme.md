@@ -11,6 +11,7 @@
 - 1.6.2 修改默认user为 'admin'
 - 1.6.5 增加durable配置和vhost
 - 1.7  优化topic 模式
+- 1.8  优化 add_sub  增加多订阅!!!
 
 ## 安装
 

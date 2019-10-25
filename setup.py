@@ -32,7 +32,7 @@ LICENSE = "MIT"
 
 setup(
     name=NAME,
-    version='1.7.1',
+    version='1.8',
     description=DESCRIPTION,
     long_description='publisher and subscriber',
     classifiers=[
