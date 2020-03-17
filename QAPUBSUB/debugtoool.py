@@ -33,14 +33,15 @@ def debug_sub(exchange, model, routing_key, user, password, host,port, durable):
 @click.option('--host', default='127.0.0.1')
 @click.option('--port', default=5672)
 @click.option('--content', default='hello')
-def debug_pub(exchange, model, routing_key, user, password, host,port, content):
+@click.option('--durable', default=False)
+def debug_pub(exchange, model, routing_key, user, password, host,port, content, durable):
     if model == 'fanout':
         publisher(host=host, port= port, user=user, password=password,
-                  exchange=exchange).pub(content)
+                  exchange=exchange, durable=durable).pub(content)
     elif model == 'direct':
         print(routing_key)
         publisher_routing(host=host, port= port, user=user, password=password,
-                          exchange=exchange, routing_key=routing_key).pub(content, routing_key=routing_key)
+                          exchange=exchange, routing_key=routing_key, durable=durable).pub(content, routing_key=routing_key)
     elif model == 'topic':
         publisher_topic(host=host, port= port, user=user, password=password,
-                        exchange=exchange, routing_key=routing_key).pub(content, routing_key=routing_key)
+                        exchange=exchange, routing_key=routing_key, durable=durable).pub(content, routing_key=routing_key)
