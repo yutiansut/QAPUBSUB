@@ -1,5 +1,7 @@
 from QAPUBSUB import producer
 
-c = producer.publisher(exchange='ctp')
-while True:
-    c.pub('I1111111')
+import json
+
+c = producer.publisher_routing(exchange='qamdgateway', host='192.168.2.117', durable=True)
+
+c.pub(json.dumps({'account_cookie': 'aa', 'code': 'SZ000001'}), routing_key='All')
