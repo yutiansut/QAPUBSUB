@@ -14,6 +14,7 @@
 - 1.8  优化 add_sub  增加多订阅!!!
 
 - 1.11 fix guest bug
+- 1.12 增加对于producer的  confirm develer
 
 
 ## 安装
