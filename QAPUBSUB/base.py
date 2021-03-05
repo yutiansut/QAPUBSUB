@@ -44,3 +44,6 @@ class base_ps():
         self.channel = self.connection.channel(
             channel_number=self.channel_number)
         return self
+
+    def close(self):
+        self.connection.close()

@@ -46,7 +46,9 @@ class subscriber(base_ps):
             self.subscribe()
         except Exception as e:
             print(e)
+            self.reconnect()
             self.start()
+
 
 
 class subscriber_routing(base_ps):
@@ -96,7 +98,9 @@ class subscriber_routing(base_ps):
             self.subscribe()
         except Exception as e:
             print(e)
+            self.reconnect()
             self.start()
+
 
 
 class subscriber_topic(base_ps):
@@ -146,4 +150,5 @@ class subscriber_topic(base_ps):
 
         except Exception as e:
             print(e)
+            self.reconnect()
             self.start()

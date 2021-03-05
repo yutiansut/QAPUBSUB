@@ -32,7 +32,7 @@ LICENSE = "MIT"
 
 setup(
     name=NAME,
-    version='1.12',
+    version='1.14',
     description=DESCRIPTION,
     long_description='publisher and subscriber',
     classifiers=[
@@ -41,7 +41,7 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
     ],
-    install_requires=['pika==1.0.0b1', 'quantaxis>=1.4.8'],
+    install_requires=['pika==1.1.0', 'quantaxis>=1.10.18'],
     entry_points={
         'console_scripts': [
             'qaps_pub = QAPUBSUB.__init__:debug_pub',
