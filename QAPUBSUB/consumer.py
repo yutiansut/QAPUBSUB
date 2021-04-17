@@ -16,15 +16,18 @@ class subscriber(base_ps):
         super().__init__(host=host, port=port, user=user, vhost=vhost,
                          password=password, exchange=exchange)
         self.queue = queue
-        self.channel.exchange_declare(exchange=exchange,
+        self.routing_key = routing_key
+        self.init_channel()
+
+    def init_channel(self):
+        self.channel.exchange_declare(exchange=self.exchange,
                                       exchange_type='fanout',
                                       passive=False,
                                       durable=False,
                                       auto_delete=False)
-        self.routing_key = routing_key
         self.queue = self.channel.queue_declare(
             queue='', auto_delete=True, exclusive=True).method.queue
-        self.channel.queue_bind(queue=self.queue, exchange=exchange,
+        self.channel.queue_bind(queue=self.queue, exchange=self.exchange,
                                 routing_key='qa_routing')          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
 
@@ -47,6 +50,7 @@ class subscriber(base_ps):
         except Exception as e:
             print(e)
             self.reconnect()
+            self.init_channel()
             self.start()
 
 
@@ -64,18 +68,24 @@ class subscriber_routing(base_ps):
         super().__init__(host=host, port=port, user=user, vhost=vhost,
                          password=password, exchange=exchange)
         self.queue = queue
-        self.channel.exchange_declare(exchange=exchange,
+        self.routing_key = routing_key
+        self.durable = durable
+        self.init_channel()
+
+    def init_channel(self):
+        self.channel.exchange_declare(exchange=self.exchange,
                                       exchange_type='direct',
                                       passive=False,
-                                      durable=durable,
+                                      durable=self.durable,
                                       auto_delete=False)
-        self.routing_key = routing_key
+
         self.queue = self.channel.queue_declare(
-            queue='', auto_delete=True, exclusive=True, durable=durable).method.queue
-        self.channel.queue_bind(queue=self.queue, exchange=exchange,
+            queue='', auto_delete=True, exclusive=True, durable=self.durable).method.queue
+        self.channel.queue_bind(queue=self.queue, exchange=self.exchange,
                                 routing_key=self.routing_key)          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
         self.c = []
+
 
     def add_sub(self, exchange, routing_key):
 
@@ -99,6 +109,7 @@ class subscriber_routing(base_ps):
         except Exception as e:
             print(e)
             self.reconnect()
+            self.init_channel()
             self.start()
 
 
