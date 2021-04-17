@@ -116,17 +116,20 @@ class subscriber_topic(base_ps):
         super().__init__(host=host, port=port, user=user, vhost=vhost,
                          password=password, exchange=exchange)
         self.queue = queue
-        self.channel.exchange_declare(exchange=exchange,
-                                      exchange_type='topic',
-                                      passive=False,
-                                      durable=durable,
-                                      auto_delete=False)
+        self.durable = durable
         self.routing_key = routing_key
+        self.init_channel()
+
+    def init_channel(self):
+        self.channel.exchange_declare(exchange=self.exchange,
+                                      exchange_type="topic",
+                                      passive=False,
+                                      durable=self.durable,
+                                      auto_delete=False)
         self.queue = self.channel.queue_declare(
             queue='', auto_delete=True, exclusive=True).method.queue
-        self.channel.queue_bind(queue=self.queue, exchange=exchange,
-                                routing_key=self.routing_key)          # 队列名采用服务端分配的临时队列
-        # self.channel.basic_qos(prefetch_count=1)
+        self.channel.queue_bind(queue=self.queue, exchange=self.exchange,
+                                routing_key=self.routing_key)
         self.c = []
 
     def add_sub(self, exchange, routing_key):
@@ -151,4 +154,5 @@ class subscriber_topic(base_ps):
         except Exception as e:
             print(e)
             self.reconnect()
+            self.init_channel() # connection和channel重建后，channel也要重新初始化
             self.start()
