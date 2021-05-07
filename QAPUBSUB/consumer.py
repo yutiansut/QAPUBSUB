@@ -3,7 +3,7 @@ import pika
 from QAPUBSUB.base import base_ps
 from QAPUBSUB.setting import qapubsub_ip, qapubsub_port, qapubsub_user, qapubsub_password
 import random
-
+import traceback
 
 class subscriber(base_ps):
     """new version (pika 1.0+) client for sub/quantaxis IO BUS
@@ -17,9 +17,9 @@ class subscriber(base_ps):
                          password=password, exchange=exchange)
         self.queue = queue
         self.routing_key = routing_key
-        self.init_channel()
+        self.channel_init()
 
-    def init_channel(self):
+    def channel_init(self):
         self.channel.exchange_declare(exchange=self.exchange,
                                       exchange_type='fanout',
                                       passive=False,
@@ -48,9 +48,10 @@ class subscriber(base_ps):
         try:
             self.subscribe()
         except Exception as e:
-            print(e)
+            print("Error Occurred: {0}".format(traceback.format_exc()))
+            print("Try reconnect")
             self.reconnect()
-            self.init_channel()
+            self.channel_init()
             self.start()
 
 
@@ -70,9 +71,9 @@ class subscriber_routing(base_ps):
         self.queue = queue
         self.routing_key = routing_key
         self.durable = durable
-        self.init_channel()
+        self.channel_init()
 
-    def init_channel(self):
+    def channel_init(self):
         self.channel.exchange_declare(exchange=self.exchange,
                                       exchange_type='direct',
                                       passive=False,
@@ -107,9 +108,10 @@ class subscriber_routing(base_ps):
         try:
             self.subscribe()
         except Exception as e:
-            print(e)
+            print("Error Occurred: {0}".format(traceback.format_exc()))
+            print("Try reconnect")
             self.reconnect()
-            self.init_channel()
+            self.channel_init()
             self.start()
 
 
@@ -129,9 +131,9 @@ class subscriber_topic(base_ps):
         self.queue = queue
         self.durable = durable
         self.routing_key = routing_key
-        self.init_channel()
+        self.channel_init()
 
-    def init_channel(self):
+    def channel_init(self):
         self.channel.exchange_declare(exchange=self.exchange,
                                       exchange_type="topic",
                                       passive=False,
@@ -163,7 +165,8 @@ class subscriber_topic(base_ps):
             self.subscribe()
 
         except Exception as e:
-            print(e)
+            print("Error Occurred: {0}".format(traceback.format_exc()))
+            print("Try reconnect")
             self.reconnect()
-            self.init_channel() # connection和channel重建后，channel也要重新初始化
+            self.channel_init() # connection和channel重建后，channel也要重新初始化
             self.start()

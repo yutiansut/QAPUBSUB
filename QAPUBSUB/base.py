@@ -23,7 +23,7 @@ class base_ps():
             self.user, self.password, erase_on_connect=True)
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=self.host, port=self.port, virtual_host=self.vhost,
-                                      credentials=self.credentials, heartbeat=0, socket_timeout=5,
+                                      credentials=self.credentials, heartbeat=15, socket_timeout=5,
                                       )
         )
 
@@ -38,7 +38,7 @@ class base_ps():
 
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=self.host, port=self.port,credentials=self.credentials,
-                                      heartbeat=0, virtual_host=self.vhost,
+                                      heartbeat=15, virtual_host=self.vhost,
                                       socket_timeout=5,))
 
         self.channel = self.connection.channel(
